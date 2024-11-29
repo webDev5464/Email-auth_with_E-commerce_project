@@ -66,6 +66,8 @@ export const UserRegister = async (req, res) => {
       `,
     })
 
+    console.log(otpStorage)
+
     res.status(200).send({
       process: true,
       message: "Check your email for OTP",
@@ -83,8 +85,10 @@ export const OtpValidation = async (req, res) => {
   try {
     const { pin1, pin2, pin3, pin4, pin5, pin6, email } = req.body.otpPin
     const otp = pin1 + pin2 + pin3 + pin4 + pin5 + pin6
-
+    console.log(email)
     const storedUserOtpDetail = otpStorage.get(email)
+
+    console.log(storedUserOtpDetail)
 
     if (!storedUserOtpDetail) throw new Error('Somethings wrong! Please try again to send OTP')
 

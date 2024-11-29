@@ -10,5 +10,5 @@ app.use(urlencoded({ extended: true }), json(), cors(), cookieParser())
 app.use("/api", userRouter)
 
 const PORT = 8080
-dbCon("mongodb://127.0.0.1:27017/auth")
+dbCon("mongodb+srv://emailAuth:emailAuth@auth.czsd1.mongodb.net/")
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
