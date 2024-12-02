@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { logoutUser, OtpValidation, UserLogin, UserRegister, validUser } from "../controllers/userControllers.js";
+
 import UserTokenAccess from "../middleware/UserTokeAccess.js";
+import { logoutUser, OtpValidation, UserLogin, UserRegister, validUser } from "../controllers/userControllers.js";
 
 export const userRouter = Router()
 

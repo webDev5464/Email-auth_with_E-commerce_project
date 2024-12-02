@@ -6,19 +6,28 @@ function Navigation() {
   const dispatch = useDispatch()
   const { userData } = useSelector(state => state.userStore)
   return (
-    <nav className="bg-blue-500 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4">
+    <nav className="bg-orange-500 shadow-lg">
+      <div className="max-w-7xl mx-auto px-20">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-white font-bold text-xl">MyApp</h1>
+           <img className="h-12 w-12 shadow-xl rounded-sm" src="https://t3.ftcdn.net/jpg/02/45/84/16/240_F_245841615_d7QzRv937jfiC176rmKK60ckNXU9V76z.jpg" alt="logo image" />
           </div>
-          <div className="flex space-x-4">
-            <Link
+          <div className="flex justify-around items-center ">
+          <Link
               to="/"
-              className="text-white hover:bg-blue-700 active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+              className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
             >
               Home
             </Link>
+            <Link
+              to="/product"
+              className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Product
+            </Link>
+          </div>
+          <div className="flex space-x-4">
+
             {userData ? (
               <>
                 <button
@@ -32,13 +41,13 @@ function Navigation() {
               <>
                 <Link
                   to="/login"
-                  className="text-white hover:bg-blue-700 active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="text-white hover:bg-blue-700 active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Register
                 </Link>

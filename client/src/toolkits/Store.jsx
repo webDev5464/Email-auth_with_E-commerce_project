@@ -3,12 +3,14 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from "redux-persist/lib/storage";
 import { UserSlice } from "./Slices/UserSlice";
 import { AdminSlice } from "./Slices/AdminSlice";
+import { ProductSlice } from "./Slices/ProductSlice";
 
 const persistConfig = { key: "root", storage };
 
 const rootReducer = combineReducers({
   userStore: UserSlice,
-  adminStore: AdminSlice
+  adminStore: AdminSlice,
+  productStore: ProductSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
