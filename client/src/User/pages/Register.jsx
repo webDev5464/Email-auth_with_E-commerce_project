@@ -1,14 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerWithOtpHandler, UserRegisterHandler } from "../../toolkits/Thunks/UserThunk";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdCancel } from "react-icons/md";
-import { OtpCancelButton } from "../../toolkits/Slices/UserSlice";
+import { OtpCancelButton, OtpProcessHandler } from "../../toolkits/Slices/UserSlice";
 
 function Register() {
   const dispatch = useDispatch()
-  const { registerProcess } = useSelector(state => state.userStore)
+  const navigate = useNavigate()
+  const { registerProcess, otpProcess } = useSelector(state => state.userStore)
+
+  useEffect(() => {
+    if (otpProcess) {
+      navigate('/')
+      dispatch(OtpProcessHandler(false))
+    }
+  }, [otpProcess])
 
   const [formData, setFormData] = useState({
     username: "",

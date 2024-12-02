@@ -7,5 +7,6 @@ export const userModel = model(
     email: { type: String },
     pass: { type: String },
     token: { type: String, default: "" },
+    isAdmin: { type: Boolean, default: false }
   })
 )

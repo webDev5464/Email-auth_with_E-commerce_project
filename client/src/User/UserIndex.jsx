@@ -4,7 +4,7 @@ import Navigation from "./modules/Navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserValidationHandler } from "../toolkits/Thunks/UserThunk";
-import { OtpProcessHandler } from "../toolkits/Slices/UserSlice";
+import { OtpCancelButton, OtpProcessHandler, RegisterProcessHandler } from "../toolkits/Slices/UserSlice";
 
 export default function UserIndex() {
   const dispatch = useDispatch()
@@ -18,10 +18,9 @@ export default function UserIndex() {
   useEffect(() => {
     if (otpProcess) {
       navigate('/login')
+      dispatch(OtpProcessHandler(false))
+      dispatch(RegisterProcessHandler(false))
     }
-    setTimeout(() => {
-      OtpProcessHandler(false)
-    }, 2000)
   }, [otpProcess])
 
   return (

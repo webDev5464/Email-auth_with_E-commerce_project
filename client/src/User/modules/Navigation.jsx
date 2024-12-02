@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutButton } from "../../toolkits/Slices/UserSlice";
 import { UserLogoutHandler } from "../../toolkits/Thunks/UserThunk";
 
 function Navigation() {

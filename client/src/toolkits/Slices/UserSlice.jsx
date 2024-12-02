@@ -19,11 +19,12 @@ const Slice = createSlice({
       state.registerProcess = action.payload
     },
     OtpProcessHandler: (state, action) => {
+      console.log(action)
       state.otpProcess = action.payload
+    },
+    RegisterProcessHandler: (state, action) => {
+      state.registerProcess = action.payload
     }
-    // logoutButton: (state) => {
-    //   state.userData = null
-    // }
   },
 
   extraReducers: (builder) => {
@@ -115,4 +116,4 @@ const Slice = createSlice({
 })
 
 export const UserSlice = Slice.reducer;
-export const { logoutButton, OtpCancelButton, OtpProcessHandler } = Slice.actions;
+export const { RegisterProcessHandler, OtpCancelButton, OtpProcessHandler } = Slice.actions;

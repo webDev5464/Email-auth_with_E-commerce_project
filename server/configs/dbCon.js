@@ -1,6 +1,5 @@
 import { connect } from "mongoose"
 
-
 export default async function dbCon(URI) {
   try {
     await connect(URI)

@@ -9,6 +9,9 @@ import Register from './User/pages/Register'
 import UserIndex from './User/UserIndex'
 import { Provider } from 'react-redux'
 import Store from './toolkits/Store'
+import AdminIndex from './Admin/AdminIndex';
+import AdminHome from './Admin/pages/AdminHome';
+import AdminLogin from './Admin/pages/AdminLogin';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,14 @@ const router = createBrowserRouter([
           { path: 'Register', element: <Register /> },
         ]
       },
+      {
+        path: "/admin",
+        element: <AdminIndex />,
+        children: [
+          { path: '/admin/', element: <AdminHome /> },
+          { path: '/admin/login', element: <AdminLogin /> }
+        ]
+      }
     ]
   }
 ])
