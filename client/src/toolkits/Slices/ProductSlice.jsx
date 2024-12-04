@@ -17,7 +17,6 @@ const Slice = createSlice({
     increaseQty: (state, action) => {
       const { id, instock, outOfStock } = action.payload;
 
-      // Find product in allProducts
       const allProduct = state.allProducts.find((product) => product.id === id);
       if (allProduct && allProduct.qty < instock && !outOfStock) {
         allProduct.qty += 1;
@@ -26,12 +25,13 @@ const Slice = createSlice({
       const watchlistProduct = state.watchlist.find(
         (product) => product.id === id
       );
-      if (watchlistProduct) {
+
+      if (watchlistProduct && watchlistProduct.liked) {
         if (allProduct && allProduct.qty !== watchlistProduct.qty) {
           watchlistProduct.qty = allProduct.qty;
         }
       } else {
-        if (allProduct) {
+        if (allProduct && allProduct.liked) {
           state.watchlist.push({ ...allProduct });
         }
       }
@@ -48,7 +48,8 @@ const Slice = createSlice({
       const watchlistProduct = state.watchlist.find(
         (product) => product.id === id
       );
-      if (watchlistProduct) {
+
+      if (watchlistProduct && watchlistProduct.liked) {
         if (allProduct && allProduct.qty !== watchlistProduct.qty) {
           watchlistProduct.qty = allProduct.qty;
         }
@@ -90,7 +91,6 @@ const Slice = createSlice({
     onSelectedSize: (state, action) => {
       const { id, size, outOfStock } = action.payload;
 
-      // Update in allProducts
       const productInAllProducts = state.allProducts.find(
         (product) => product.id === id
       );
@@ -98,7 +98,6 @@ const Slice = createSlice({
         productInAllProducts.selectedSize = size;
       }
 
-      // Update in watchlist
       const productInWatchlist = state.watchlist.find(
         (product) => product.id === id
       );
@@ -110,7 +109,6 @@ const Slice = createSlice({
     onSelectColor: (state, action) => {
       const { id, color, outOfStock } = action.payload;
 
-      // Update in allProducts
       const productInAllProducts = state.allProducts.find(
         (product) => product.id === id
       );
@@ -118,7 +116,6 @@ const Slice = createSlice({
         productInAllProducts.selectedColor = color;
       }
 
-      // Update in watchlist
       const productInWatchlist = state.watchlist.find(
         (product) => product.id === id
       );
