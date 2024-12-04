@@ -25,6 +25,18 @@ function Navigation() {
             >
               Product
             </Link>
+            <Link
+              to="/watchlist"
+              className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Watchlist
+            </Link>
+            <Link
+              to="/cart"
+              className="text-white hover:underline hover:text-black hover:scale-110 duration-300  active:scale-95 px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Cart
+            </Link>
           </div>
           <div className="flex space-x-4">
 

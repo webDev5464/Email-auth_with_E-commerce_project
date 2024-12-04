@@ -5,50 +5,129 @@ const Slice = createSlice({
   name: "ProductSlice",
   initialState: {
     loading: false,
-    products: [],
+    allProducts: [],
+    watchlist: [],
     message: "",
+    product: [],
+    liked: false,
+    selectedSize: null,
+    selectedColor: undefined,
   },
   reducers: {
-    IncreseQty: (state, action) => {
-      const { id, instock , outOfStock} = action.payload;
-      const product = state.products.find((product) => product.id === id);
-      if (product && product.newqty < instock && !outOfStock) {
-        product.newqty += 1;
+    increaseQty: (state, action) => {
+      const { id, instock, outOfStock } = action.payload;
+
+      // Find product in allProducts
+      const allProduct = state.allProducts.find((product) => product.id === id);
+      if (allProduct && allProduct.qty < instock && !outOfStock) {
+        allProduct.qty += 1;
+      }
+
+      const watchlistProduct = state.watchlist.find(
+        (product) => product.id === id
+      );
+      if (watchlistProduct) {
+        if (allProduct && allProduct.qty !== watchlistProduct.qty) {
+          watchlistProduct.qty = allProduct.qty;
+        }
+      } else {
+        if (allProduct) {
+          state.watchlist.push({ ...allProduct });
+        }
       }
     },
 
-    DecreseQty: (state, action) => {
-      const { id ,outOfStock } = action.payload;
-      const product = state.products.find((product) => product.id === id);
-      if (product && product.newqty > 1 && !outOfStock) {
-        product.newqty -= 1;
-      }
-    },
-
-    AddToWatchlist: (state, action) => {
+    decreaseQty: (state, action) => {
       const { id, outOfStock } = action.payload;
-      const product = state.products.find((product) => product.id === id);
+
+      const allProduct = state.allProducts.find((product) => product.id === id);
+      if (allProduct && allProduct.qty > 1 && !outOfStock) {
+        allProduct.qty -= 1;
+      }
+
+      const watchlistProduct = state.watchlist.find(
+        (product) => product.id === id
+      );
+      if (watchlistProduct) {
+        if (allProduct && allProduct.qty !== watchlistProduct.qty) {
+          watchlistProduct.qty = allProduct.qty;
+        }
+      }
+    },
+
+    addToWatchlist: (state, action) => {
+      const { id, outOfStock } = action.payload;
+      const product = state.allProducts.find((product) => product.id === id);
       if (product && !outOfStock) {
         product.liked = !product.liked;
+        if (product.liked) {
+          const existingProductInWatchlist = state.watchlist.find(
+            (item) => item.id === id
+          );
+          if (!existingProductInWatchlist) {
+            state.watchlist.push({ ...product });
+          }
+        } else {
+          state.watchlist = state.watchlist.filter((item) => item.id !== id);
+        }
       }
     },
 
-    SelectedSize: (state, action) => {
+    addToCart: (state, action) => {
+      const { id } = action.payload;
+      const addProduct = state.allProducts.find((item) => item.id === id);
+
+      if (addProduct) {
+        const isProductInCart = state.CartProducts.some(
+          (item) => item.id === id
+        );
+        if (!isProductInCart) {
+          state.CartProducts.push({ ...addProduct });
+        }
+      }
+    },
+
+    onSelectedSize: (state, action) => {
       const { id, size, outOfStock } = action.payload;
-      const product = state.products.find((product) => product.id === id);
-      if (product && !outOfStock) {
-        product.selectedSize = size;
+
+      // Update in allProducts
+      const productInAllProducts = state.allProducts.find(
+        (product) => product.id === id
+      );
+      if (productInAllProducts && !outOfStock) {
+        productInAllProducts.selectedSize = size;
+      }
+
+      // Update in watchlist
+      const productInWatchlist = state.watchlist.find(
+        (product) => product.id === id
+      );
+      if (productInWatchlist && !outOfStock) {
+        productInWatchlist.selectedSize = size;
       }
     },
 
-    SelectedColor: (state, action) => {
+    onSelectColor: (state, action) => {
       const { id, color, outOfStock } = action.payload;
-      const product = state.products.find((product) => product.id === id);
-      if (product && !outOfStock) {
-        product.setColor = color;
+
+      // Update in allProducts
+      const productInAllProducts = state.allProducts.find(
+        (product) => product.id === id
+      );
+      if (productInAllProducts && !outOfStock) {
+        productInAllProducts.selectedColor = color;
+      }
+
+      // Update in watchlist
+      const productInWatchlist = state.watchlist.find(
+        (product) => product.id === id
+      );
+      if (productInWatchlist && !outOfStock) {
+        productInWatchlist.selectedColor = color;
       }
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(GetProducts.pending, (state) => {
@@ -56,29 +135,14 @@ const Slice = createSlice({
       })
       .addCase(GetProducts.fulfilled, (state, action) => {
         const { products, message } = action.payload;
+        state.allProducts = products;
         state.loading = false;
-        state.products = products;
         state.message = message;
-        state.products = state.products.map((product) => {
-          return {
-            ...product,
-            price: new Intl.NumberFormat("en-IN", {
-              style: "currency",
-              currency: "INR",
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }).format(product.price * 10),
-            liked: false,
-            selectedSize: null,
-            setColor: undefined,
-            newqty: 1,
-          };
-        });
       })
       .addCase(GetProducts.rejected, (state, action) => {
         const { message } = action.payload;
         state.loading = false;
-        state.products = [];
+        state.allProducts = [];
         state.message = message;
       });
   },
@@ -86,10 +150,10 @@ const Slice = createSlice({
 
 export const ProductSlice = Slice.reducer;
 export const {
-  IncreseQty,
-  DecreseQty,
-  setProducts,
-  AddToWatchlist,
-  SelectedSize,
-  SelectedColor,
+  increaseQty,
+  decreaseQty,
+  addToWatchlist,
+  onSelectedSize,
+  addToCart,
+  onSelectColor,
 } = Slice.actions;

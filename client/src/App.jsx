@@ -1,7 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { GetProducts } from "./toolkits/Thunks/ProductThunk";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function App() {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(GetProducts());
+  }, []);
+
   return (
     <>
       <ToastContainer

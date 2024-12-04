@@ -3,7 +3,7 @@ import { IoIosStarHalf } from "react-icons/io";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 
-const renderStars = (rating) => {
+const RenderStars = ({rating}) => {
 
 
   const fullStars = Math.floor(rating);
@@ -11,7 +11,7 @@ const renderStars = (rating) => {
   const emptyStars = 5 - Math.ceil(rating);
   const stars = [];
 
-  
+
   for (let i = 0; i < fullStars; i++) {
     stars.push(<IoIosStar key={i} className="h-3 w-3 text-yellow-500" />);
   }
@@ -31,4 +31,4 @@ const renderStars = (rating) => {
   return stars;
 };
 
-export default renderStars;
+export default RenderStars;

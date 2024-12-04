@@ -8,12 +8,13 @@ import Login from "./User/pages/Login";
 import Register from "./User/pages/Register";
 import UserIndex from "./User/UserIndex";
 import { Provider } from "react-redux";
-import Store, { StorePersister } from "./toolkits/Store";
+import Store from "./toolkits/Store";
 import AdminIndex from "./Admin/AdminIndex";
 import AdminHome from "./Admin/pages/AdminHome";
 import AdminLogin from "./Admin/pages/AdminLogin";
 import Products from "./User/pages/Products";
-import { PersistGate } from "redux-persist/integration/react";
+import Watchlist from "./User/pages/Watchlist";
+import CartProducts from "./User/pages/CartProducts";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,8 @@ const router = createBrowserRouter([
           { path: "Login", element: <Login /> },
           { path: "Register", element: <Register /> },
           { path: "product", element: <Products /> },
+          { path: "watchlist", element: <Watchlist /> },
+          { path: "cart", element: <CartProducts /> },
         ],
       },
       {
@@ -44,8 +47,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={Store}>
-    <PersistGate loading={<div>Loading...</div>} persistor={StorePersister}>
       <RouterProvider router={router} />
-    </PersistGate>
   </Provider>
 );

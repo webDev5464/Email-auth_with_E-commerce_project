@@ -5,6 +5,8 @@ import { UserSlice } from "./Slices/UserSlice";
 import { AdminSlice } from "./Slices/AdminSlice";
 import { ProductSlice } from "./Slices/ProductSlice";
 
+
+
 const persistConfig = { key: "root", storage };
 
 const rootReducer = combineReducers({
@@ -27,3 +29,20 @@ const Store = configureStore({
 
 export const StorePersister = persistStore(Store);
 export default Store;
+
+
+
+// import { UserSlice } from "./Slices/UserSlice";
+// import { AdminSlice } from "./Slices/AdminSlice";
+// import { ProductSlice } from "./Slices/ProductSlice";
+// import { configureStore } from "@reduxjs/toolkit";
+
+// const store = configureStore({
+//   reducer: {
+//    userStore: UserSlice,
+//   adminStore: AdminSlice,
+//   productStore: ProductSlice
+//   }
+// })
+
+// export default store

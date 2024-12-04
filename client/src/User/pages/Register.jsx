@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { registerWithOtpHandler, UserRegisterHandler } from "../../toolkits/Thunks/UserThunk";
+import { registerWithOtpHandler, ResendnewOtp, UserRegisterHandler } from "../../toolkits/Thunks/UserThunk";
 import { useEffect, useState } from "react";
 import { MdCancel } from "react-icons/md";
 import { OtpCancelButton, OtpProcessHandler } from "../../toolkits/Slices/UserSlice";
@@ -88,7 +88,7 @@ function Register() {
             </form>
             <p className="text-gray-600 text-sm text-center mt-4">
               Didn't receive the OTP?{" "}
-              <button className="text-green-500 hover:underline">Resend</button>
+              <button onClick={()=> dispatch(ResendnewOtp(formData))} className="text-green-500 hover:underline">Resend</button>
             </p>
           </div>
         </>
